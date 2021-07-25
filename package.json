@@ -25,7 +25,10 @@
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.64.0",
     "react-test-renderer": "17.0.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "husky": "7.0.1",
+    "lint-staged": "11.1.1",
+    "prettier": "2.3.2"
   },
   "resolutions": {
     "@types/react": "^17"
@@ -39,6 +42,27 @@
       "jsx",
       "json",
       "node"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && echo \"No more tasks\"",
+      "post-commit": "git update-index --again"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
     ]
   }
 }
