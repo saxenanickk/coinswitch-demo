@@ -16,47 +16,51 @@ const Root = () => {
   const dispatch = useAppDispatch();
 
   const fetchWatchListData = () => {
-    AsyncStorage.getItem('@watchlist').then((value) => {
-      console.log(value)
-      if(value != null){
-        dispatch(loadWatchlistData(JSON.parse(value)));
-      }
-    }).catch(e => {
-      console.log(e)
-    })
-  }
+    AsyncStorage.getItem('@watchlist')
+      .then(value => {
+        console.log(value);
+        if (value != null) {
+          dispatch(loadWatchlistData(JSON.parse(value)));
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
   const fetchCryptoListData = () => {
-    AsyncStorage.getItem('@cryptolist').then((value) => {
-      console.log(value)
-      if(value != null){
-        dispatch(loadCryptoData(JSON.parse(value)));
-      } else {
-        throw new Error("No data in async storage")
-      }
-    }).catch(e => {
-      console.log(e)
-      const formattedCryptoData = cryptoData?.map((item: any) => {
-        const temp = {
-          name: item?.name,
-          id: item?.id,
-          symbol: item?.symbol,
-          image: item?.image,
-          quantity: item?.current_price,
-          inWatch: false,
-          percentChange: Math.abs(item?.price_change_percentage_24h),
-          changeStatus: item?.price_change_percentage_24h > 0 ? 1 : 0,
-        };
-        return temp;
-      });
+    AsyncStorage.getItem('@cryptolist')
+      .then(value => {
+        console.log(value);
+        if (value != null) {
+          dispatch(loadCryptoData(JSON.parse(value)));
+        } else {
+          throw new Error('No data in async storage');
+        }
+      })
+      .catch(e => {
+        console.log(e);
+        const formattedCryptoData = cryptoData?.map((item: any) => {
+          const temp = {
+            name: item?.name,
+            id: item?.id,
+            symbol: item?.symbol,
+            image: item?.image,
+            quantity: item?.current_price,
+            inWatch: false,
+            percentChange: Math.abs(item?.price_change_percentage_24h),
+            changeStatus: item?.price_change_percentage_24h > 0 ? 1 : 0,
+          };
+          return temp;
+        });
 
-      dispatch(loadCryptoData(formattedCryptoData));
-    })
-  }
+        dispatch(loadCryptoData(formattedCryptoData));
+      });
+  };
 
   useEffect(() => {
-    fetchWatchListData()
-    fetchCryptoListData()
+    fetchWatchListData();
+    fetchCryptoListData();
   }, []);
 
   const screenOptions = {
