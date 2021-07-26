@@ -29,10 +29,10 @@ const cryptoSlice = createSlice({
   initialState: initialState,
   reducers: {
     loadWatchlistData: (state, action: PayloadAction<Crypto[]>) => {
-      state.watchlist = action.payload
+      state.watchlist = action.payload;
     },
     loadCryptoData: (state, action: PayloadAction<Crypto[]>) => {
-      state.history = action.payload
+      state.history = action.payload;
     },
     updateWatchlist: (state, action: PayloadAction<String>) => {
       const itemIndex = state.history.findIndex(
@@ -59,11 +59,12 @@ const cryptoSlice = createSlice({
         state.watchlist.push(newArray[itemIndex]);
       }
 
-      AsyncStorage.setItem('@cryptolist', JSON.stringify(state.history))
-      AsyncStorage.setItem('@watchlist', JSON.stringify(state.watchlist))
+      AsyncStorage.setItem('@cryptolist', JSON.stringify(state.history));
+      AsyncStorage.setItem('@watchlist', JSON.stringify(state.watchlist));
     },
   },
 });
 
-export const {loadWatchlistData,loadCryptoData, updateWatchlist} = cryptoSlice.actions;
+export const {loadWatchlistData, loadCryptoData, updateWatchlist} =
+  cryptoSlice.actions;
 export default cryptoSlice.reducer;
